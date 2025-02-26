@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen flex items-center justify-center p-5">
+    <div class="bg-white shadow-2xl rounded-lg overflow-hidden w-full max-w-3xl">
+        <div class="flex justify-between items-center py-5 px-10 bg-gradient-to-r from-green-500 to-blue-500 text-white">
+            
+            <h1 class="text-4xl font-bold">Money Management</h1>
+            <span class="text-xl italic">Sanskar </span>
+        </div>
+        <div class="p-5">
+            <div class="flex justify-around mb-10">
+                <div class="p-5 bg-green-100 rounded shadow-lg">
+                    <h2 class="text-xl font-bold text-green-600">Balance</h2>
+                    <p id="balance" class="text-2xl">₹0.00</p>
+                </div>
+                <div class="p-5 bg-blue-100 rounded shadow-lg">
+                    <h2 class="text-xl font-bold text-blue-600">Income</h2>
+                    <p id="income" class="text-2xl">₹0.00</p>
+                </div>
+                <div class="p-5 bg-red-100 rounded shadow-lg">
+                    <h2 class="text-xl font-bold text-red-600">Expenses</h2>
+                    <p id="expenses" class="text-2xl">₹0.00</p>
+                </div>
+            </div>
+            <div class="text-right mb-4">
+                <button id="toggleFormButton" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-300 ease-in-out transform hover:scale-105">Add New</button>
+            </div>
+            <form id="expenseForm" class="bg-white p-5 rounded shadow-md hidden">
+                <div class="mb-4">
+                    <label for="remark" class="block text-gray-700">Remark:</label>
+                    <input type="text" id="remark" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="amount" class="block text-gray-700">Amount:</label>
+                    <input type="number" id="amount" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="type" class="block text-gray-700">Type:</label>
+                    <select id="type" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500" required>
+                        <option value="credit">Income</option>
+                        <option value="debit">Expense</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded transition duration-300 ease-in-out transform hover:scale-105">Submit</button>
+            </form>
+            <div class="mt-10">
+                <h2 class="text-xl font-bold mb-4">Money History</h2>
+                <div class="flex justify-around mb-4">
+                    <button id="showAllButton" class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded transition duration-300 ease-in-out transform hover:scale-105">Show All</button>
+                    <button id="showIncomeButton" class="bg-green-300 hover:bg-green-400 text-black px-4 py-2 rounded transition duration-300 ease-in-out transform hover:scale-105">Show Income</button>
+                    <button id="showExpensesButton" class="bg-red-300 hover:bg-red-400 text-black px-4 py-2 rounded transition duration-300 ease-in-out transform hover:scale-105">Show Expenses</button>
+                </div>
+                <table class="w-full bg-white rounded shadow-md">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="p-2">S.No</th>
+                            <th class="p-2 cursor-pointer" onclick="sortHistory('remark')">Remark <span id="remarkSortIcon">↑↓</span></th>
+                            <th class="p-2 cursor-pointer" onclick="sortHistory('amount')">Amount <span id="amountSortIcon">↑↓</span></th>
+                            <th class="p-2">Type</th>
+                            <th class="p-2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable">
+                        <!-- History items will be appended here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleFormButton = document.getElementById('toggleFormButton');
+            const expenseForm = document.getElementById('expenseForm');
+            const balanceEl = document.getElementById('balance');
+            const incomeEl = document.getElementById('income');
+            const expensesEl = document.getElementById('expenses');
+            const historyTable = document.getElementById('historyTable');
+            const showAllButton = document.getElementById('showAllButton');
+            const showIncomeButton = document.getElementById('showIncomeButton');
+            const showExpensesButton = document.getElementById('showExpensesButton');
+
+            let balance = 0;
+            let income = 0;
+            let expenses = 0;
+            let history = [];
+            let sortOrder = { remark: 'asc', amount: 'asc' };
+
+            const updateDisplay = () => {
+                balanceEl.textContent = `₹${balance.toFixed(2)}`;
+                incomeEl.textContent = `₹${income.toFixed(2)}`;
+                expensesEl.textContent = `₹${expenses.toFixed(2)}`;
+            };
+
+            const renderHistory = (filterType = 'all', sortField = null) => {
+                if (sortField) {
+                    history.sort((a, b) => {
+                        if (sortOrder[sortField] === 'asc') {
+                            return a[sortField] > b[sortField] ? 1 : -1;
+                        } else {
+                            return a[sortField] < b[sortField] ? 1 : -1;
+                        }
+                    });
+                }
+                historyTable.innerHTML = '';
+                history
+                    .filter(item => filterType === 'all' || item.type === filterType)
+                    .forEach((item, index) => {
+                        const row = document.createElement('tr');
+                        row.classList.add('fade-in');
+                        row.innerHTML = `
+                            <td class="p-2">${index + 1}</td>
+                            <td class="p-2">${item.remark}</td>
+                            <td class="p-2">₹${item.amount.toFixed(2)}</td>
+                            <td class="p-2">${item.type === 'credit' ? 'Income' : 'Expense'}</td>
+                            <td class="p-2"><button onclick="deleteItem(${index})" class="bg-red-500 hover:bg-red-700 text-white px-2 py-1 rounded transition duration-300 ease-in-out transform hover:scale-105">Delete</button></td>
+                        `;
+                        historyTable.appendChild(row);
+                    });
+            };
+
+            const toggleForm = () => {
+                if (expenseForm.classList.contains('hidden')) {
+                    expenseForm.classList.remove('hidden');
+                    toggleFormButton.textContent = 'Close';
+                } else {
+                    expenseForm.classList.add('hidden');
+                    toggleFormButton.textContent = 'Add New';
+                }
+            };
+
+            const addItem = (remark, amount, type) => {
+                if (type === 'credit') {
+                    income += amount;
+                    balance += amount;
+                } else {
+                    expenses += amount;
+                    balance -= amount;
+                }
+                history.push({ remark, amount, type });
+                updateDisplay();
+                renderHistory('all');
+            };
+
+            window.deleteItem = (index) => {
+                const item = history[index];
+                if (item.type === 'credit') {
+                    income -= item.amount;
+                    balance -= item.amount;
+                } else {
+                    expenses -= item.amount;
+                    balance += item.amount;
+                }
+                history.splice(index, 1);
+                updateDisplay();
+                renderHistory('all');
+            };
+
+            window.sortHistory = (field) => {
+                sortOrder[field] = sortOrder[field] === 'asc' ? 'desc' : 'asc';
+                renderHistory('all', field);
+            };
+
+            expenseForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const remark = document.getElementById('remark').value;
+                const amount = parseFloat(document.getElementById('amount').value);
+                const type = document.getElementById('type').value;
+                addItem(remark, amount, type);
+                expenseForm.reset();
+                toggleForm();
+            });
+
+            toggleFormButton.addEventListener('click', toggleForm);
+            showAllButton.addEventListener('click', () => renderHistory('all'));
+            showIncomeButton.addEventListener('click', () => renderHistory('credit'));
+            showExpensesButton.addEventListener('click', () => renderHistory('debit'));
+
+            updateDisplay();
+            renderHistory('all');
+        });
+    </script>
+</body>
+
+</html>

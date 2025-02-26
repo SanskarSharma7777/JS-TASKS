@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Patterns</title>
+</head>
+
+<body class="flex items-center justify-center  h-screen bg-slate-900 text-white">
+    <div class="w-full">
+        <h1 class="text-center font-bold text-3xl p-4 text-gray-500">Patterns</h1>
+        <div class="grid grid-cols-4 gap-8 w-full p-8 ">
+            <div id="p1" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p2" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p3" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p4" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p5" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p6" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p7" class="flex justify-center items-center flex-col">
+            </div>
+
+            <div id="p8" class="flex justify-center items-center flex-col">
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        //Pattern 1
+        var output = ''
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j <= 4; j++) {
+                output += '* '
+            }
+            output += '<br/>'
+        }
+        document.getElementById('p1').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 1</h1> ${output} `
+
+        //Pattern 2
+        var output1 = ''
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j <= i; j++) {
+                output1 += `${j} `
+            }
+            output1 += '<br/>'
+        }
+        document.getElementById('p2').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 2</h1> ${output1} `
+
+        //Pattern 3
+        var output1 = ''
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j <= i; j++) {
+                output1 += `${i} `
+            }
+            output1 += '<br/>'
+        }
+        document.getElementById('p3').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 3</h1> ${output1} `
+
+        //P 4
+        var count = 1
+        var output1 = ''
+        for (var i = 1; i <= 4; i++) {
+            for (var j = 1; j <= i; j++) {
+                output1 += `${count} `
+                count++
+            }
+            output1 += '<br/>'
+        }
+        document.getElementById('p4').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 4</h1> ${output1} `
+
+        //p5
+        var output = ''
+        for (var i = 1; i <= 4; i++) {
+            //space
+            for (var j = 1; j <= 4 - i; j++) {
+                output += '&nbsp;&nbsp;&nbsp;'
+            }
+            for (var j = 1; j <= i; j++) {
+                output += `${j} `
+            }
+            output += '<br/>'
+        }
+        document.getElementById('p5').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 5</h1> ${output} `
+
+
+
+
+
+        //p7
+        var output1 = ''
+        for (var i = 4; i >= 1; i--) {
+            for (var j = 1; j <= i; j++) {
+                output1 += `${i} `
+            }
+            output1 += '<br/>'
+        }
+        document.getElementById('p7').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 7</h1> ${output1} `
+
+
+        //p8
+        var count = 1
+        var output1 = ''
+        for (var i = 1; i <= 3; i++) {
+            for (var j = 1; j <= i; j++) {
+                output1 += `${count} `
+                count += 2
+            }
+            output1 += '<br/>'
+        }
+        document.getElementById('p8').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 8</h1> ${output1}`
+
+        //p6
+        var output = ''
+        for (var i = 1; i <= 4; i++) {
+            //space
+            for (var j = 1; j <= 4 - i; j++) {
+                output += '&nbsp;&nbsp;'
+            }
+            for (var j = 1; j <= i; j++) {
+                output += `&nbsp;&nbsp;${i} `
+            }
+            output += '<br/>'
+        }
+        document.getElementById('p6').innerHTML = `<h1 class='p-4 text-2xl font-semibold'>Pattern 6</h1> ${output} `
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

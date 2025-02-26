@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetelementApp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white p-10 rounded shadow-lg text-center">
+        <h1 id="heading" class="text-2xl font-bold mb-5">Hello</h1>
+        <div class="flex space-x-4">
+            <button id="changeTextButton" class="bg-blue-500 text-white px-4 py-2 rounded">PraleeTech</button>
+            <button id="changeColorButton" class="bg-red-500 text-white px-4 py-2 rounded">Change Color</button>
+            <button id="changeFontSizeButton" class="bg-yellow-500 text-white px-4 py-2 rounded">Change Font Size</button>
+            <button id="changeTextTaskButton" class="bg-green-500 text-white px-4 py-2 rounded">Change to Task: Sanskar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let headingText = 'Hello';
+            let isRed = false;
+            let isLarge = false;
+
+            const heading = document.getElementById('heading');
+            const changeTextButton = document.getElementById('changeTextButton');
+            const changeColorButton = document.getElementById('changeColorButton');
+            const changeFontSizeButton = document.getElementById('changeFontSizeButton');
+            const changeTextTaskButton = document.getElementById('changeTextTaskButton');
+
+            changeTextButton.addEventListener('click', () => {
+                headingText = 'Hello Pralee!';
+                heading.textContent = headingText;
+            });
+
+            changeColorButton.addEventListener('click', () => {
+                isRed = !isRed;
+                heading.classList.toggle('text-red-500', isRed);
+            });
+
+            changeFontSizeButton.addEventListener('click', () => {
+                isLarge = !isLarge;
+                heading.classList.toggle('text-4xl', isLarge);
+            });
+
+            changeTextTaskButton.addEventListener('click', () => {
+                headingText = 'Task: Sanskar';
+                heading.textContent = headingText;
+            });
+        });
+    </script>
+</body>
+</html>

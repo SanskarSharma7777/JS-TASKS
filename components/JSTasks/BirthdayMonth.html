@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highlight Birthday Month</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gradient-to-br from-gray-100 to-blue-100">
+    <div class="text-center bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-6 text-blue-700">Highlight Your Birthday Month</h1>
+        <input id="monthInput" type="number" placeholder="Enter your birthday month (1-12)"
+            class="border border-gray-400 p-3 mb-4 w-80 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            min="1" max="12" aria-label="Birthday month">
+        <button id="submitButton"
+            class="bg-gradient-to-r text-white from-blue-700 to-sky-600 px-6 py-3 rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-xl">Submit</button>
+        <div class="mt-8 grid grid-cols-3 gap-6">
+            <div id="January" class="p-4 bg-white rounded-lg shadow-md transition-transform">January</div>
+            <div id="February" class="p-4 bg-white rounded-lg shadow-md transition-transform">February</div>
+            <div id="March" class="p-4 bg-white rounded-lg shadow-md transition-transform">March</div>
+            <div id="April" class="p-4 bg-white rounded-lg shadow-md transition-transform">April</div>
+            <div id="May" class="p-4 bg-white rounded-lg shadow-md transition-transform">May</div>
+            <div id="June" class="p-4 bg-white rounded-lg shadow-md transition-transform">June</div>
+            <div id="July" class="p-4 bg-white rounded-lg shadow-md transition-transform">July</div>
+            <div id="August" class="p-4 bg-white rounded-lg shadow-md transition-transform">August</div>
+            <div id="September" class="p-4 bg-white rounded-lg shadow-md transition-transform">September</div>
+            <div id="October" class="p-4 bg-white rounded-lg shadow-md transition-transform">October</div>
+            <div id="November" class="p-4 bg-white rounded-lg shadow-md transition-transform">November</div>
+            <div id="December" class="p-4 bg-white rounded-lg shadow-md transition-transform">December</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitButton').onclick = function () {
+            var inputMonth = parseInt(document.getElementById('monthInput').value);
+
+            // List of month names
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
+            months.forEach(month => {
+                var element = document.getElementById(month);
+                element.classList.remove('bg-pink-300', 'transform', 'scale-110', 'ring', 'ring-pink-400');
+                element.classList.add('bg-white');
+            });
+
+          
+            if (inputMonth >= 1 && inputMonth <= 12) {
+                var monthToHighlight = months[inputMonth - 1];
+                var highlightedMonth = document.getElementById(monthToHighlight);
+                highlightedMonth.classList.remove('bg-white');
+                highlightedMonth.classList.add('bg-blue-300', 'transform', 'scale-110', 'ring', 'ring-blue-400');
+            } else {
+                alert('Please enter a valid month number (1-12)');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Signal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .traffic-signal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .signal {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.5s ease;
+        }
+
+        .toggle-button {
+            padding: 10px 20px;
+            background-image: linear-gradient(to right, #3498db, #2ecc71);
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="traffic-signal">
+        <div id="signal" class="signal" style="background-color: red;">Stop</div>
+        <button id="toggleButton" class="toggle-button">Change</button>
+    </div>
+
+    <script>
+        document.getElementById('toggleButton').addEventListener('click', function () {
+            var signal = document.getElementById('signal');
+            var button = document.getElementById('toggleButton');
+
+            if (signal.style.backgroundColor === 'red') {
+                signal.style.backgroundColor = 'green';
+                signal.textContent = 'Go';
+            } else {
+                signal.style.backgroundColor = 'red';
+                signal.textContent = 'Stop';
+            }
+        });
+    </script>
+</body>
+
+</html>
