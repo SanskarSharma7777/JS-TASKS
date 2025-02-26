@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibonacci Series Sum Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-4">Fibonacci Series Sum Calculator</h1>
+        <label for="termsInput" class="block text-lg mb-2">Enter the number of terms:</label>
+        <input type="number" id="termsInput" class="w-full p-2 mb-4 border border-gray-300 rounded" min="1" placeholder="Enter the number of terms" required>
+        <button onclick="calculateFibonacciSum()" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Calculate Sum</button>
+        <p id="result" class="text-xl mt-4 text-center"></p>
+    </div>
+
+    <script>
+        function calculateFibonacciSum() {
+            const n = parseInt(document.getElementById("termsInput").value);
+
+            if (isNaN(n) || n < 1) {
+                alert("Please enter a positive integer greater than zero.");
+                return;
+            }
+
+            let fibSeries = [0, 1];
+            for (let i = 2; i < n; i++) {
+                fibSeries.push(fibSeries[i - 1] + fibSeries[i - 2]);
+            }
+            const sum = fibSeries.reduce((acc, val) => acc + val, 0);
+
+            document.getElementById("result").textContent = `The sum of the first ${n} terms of the Fibonacci series is: ${sum}`;
+        }
+    </script>
+</body>
+
+</html>

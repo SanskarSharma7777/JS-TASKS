@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armstrong Number Checker</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-96">
+        <h1 class="text-2xl font-bold mb-4 text-center">Armstrong Number Checker</h1>
+        <input type="number" id="numberInput" placeholder="Enter a number" class="w-full p-2 border border-gray-300 rounded mb-4">
+        <button onclick="checkArmstrongNumber()" class="w-full bg-blue-500 text-white p-2 rounded">Check</button>
+        <p id="result" class="mt-4 text-center"></p>
+    </div>
+    <script>
+        function checkArmstrongNumber() {
+            const numberInput = document.getElementById('numberInput').value;
+            const num = parseInt(numberInput);
+            const numString = num.toString();
+            const numDigits = numString.length;
+
+            let sum = 0;
+            for (let i = 0; i < numDigits; i++) {
+                sum += Math.pow(parseInt(numString[i]), numDigits);
+            }
+
+            const resultElement = document.getElementById('result');
+            if (sum === num) {
+                resultElement.textContent = `${num} is an Armstrong number.`;
+                resultElement.classList.remove('text-red-500');
+                resultElement.classList.add('text-green-500');
+            } else {
+                resultElement.textContent = `${num} is not an Armstrong number.`;
+                resultElement.classList.remove('text-green-500');
+                resultElement.classList.add('text-red-500');
+            }
+        }
+    </script>
+</body>
+</html>
